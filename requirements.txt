@@ -3,7 +3,10 @@ uvicorn
 python-multipart
 PyPDF2
 openpyxl
+pandas
 requests
-openai
+anthropic
 pytest
 pydantic-settings
+pdfplumber
+pytesseract
