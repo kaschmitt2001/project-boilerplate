@@ -1,44 +1,71 @@
 # Document Processing Application
 
-This API processes shipment documents and data is made readily available to user on UI
+Extracts shipment data from PDF and Excel documents using Anthropic's Claude API. Built as a 3-hour technical demonstration.
 
-## Setup
+## Local Development Setup
 
-1. Clone the repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Run the API: `python -m app.main`
-4. You may access the API docs at [`http://localhost:8000/docs`](http://localhost:8000/docs)
-
-## API Endpoints
-
-- `POST /process-documents`: Single endpoint to process all documents and fill out the form
-## Docker
-
-Build the Docker image: 
-
+### 1. Install Backend Dependencies
 ```bash
-    docker build -t document-processor .
+pip install -r requirements.txt
+```
+###2. Start Backend Server
+```bash
+# From project root directory
+python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-Run the Docker container:
-
+### 3. Start Frontend (New Terminal)
 ```bash
-    docker run -d -p 8000:8000 document-processor
+cd frontend
+npm install
+npm start
 ```
 
-## Testing
+### 5. Test the Application
+- Open http://localhost:3000
+- Upload both PDF and Excel files to test extraction
+- Backend API available at http://localhost:8000/docs
 
+## What It Does
 
-Run tests:
+Extracts 8 specific fields from shipment documents:
+- Bill of Lading number
+- Container number  
+- Consignee name & address
+- Date
+- Line items count
+- Average gross weight & price
 
-```bash
-    pytest
-```
+## Key Design Decisions & Tradeoffs
 
-## Evaluation
+**OCR for PDFs**: Many shipping documents are scanned images, so we added Tesseract OCR. This works but is slower than pure text extraction.
 
-Run the evaluation script:
+**Excel + PDF combo**: Treating both documents as a single shipment rather than separate extractions. The Excel usually has detailed line items while the PDF has shipping info.
 
-```bash
-    python evaluation.py
-```
+**Claude over GPT**: Anthropic's Claude handles structured extraction better in our testing, especially with inconsistent document formats.
+
+**No database**: Everything processes in-memory for simplicity. In production you'd want persistent storage for documents and extracted data.
+
+**Frontend validation**: Basic client-side editing of extracted data, but no complex validation rules since document formats vary wildly.
+
+## With More Time
+
+**Docker**: Complete and test Docker setup. It is close to ready but not fully tested
+
+**Document storage**: Upload files to S3/similar instead of processing in-memory. Store original documents for audit trails.
+
+**Database layer**: PostgreSQL with tables for shipments, documents, extracted_data. Would enable search, reporting, batch processing.
+
+**Better PDF handling**: Multiple OCR engines (Tesseract + cloud services), better preprocessing for image quality.
+
+**Template detection**: Auto-detect document types and apply specialized extraction logic per shipping line or document format.
+
+**Confidence scoring**: Have the LLM return confidence levels for each extracted field. Flag low-confidence extractions for human review.
+
+**API rate limiting**: Anthropic API costs add up quickly with large documents.
+
+## Technical Stack
+
+- **Backend**: FastAPI + Anthropic Claude + PyPDF2 + Tesseract OCR
+- **Frontend**: React + Material-UI  
+- **Processing**: pandas for Excel, pdfplumber + pytesseract for PDFs

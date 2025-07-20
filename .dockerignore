@@ -1,0 +1,33 @@
+# Node modules and build artifacts
+frontend/node_modules
+frontend/build
+frontend/.env
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+.pytest_cache
+
+# Git and IDE
+.git
+.gitignore
+.vscode
+.idea
+
+# Documentation
+README.md
+*.md
+
+# Environment files
+.env
+.env.local
+
+# macOS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.log 

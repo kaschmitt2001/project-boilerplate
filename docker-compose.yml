@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # - API_KEY=${API_KEY:-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}
+    volumes:
+      - ./app:/app/app
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    image: node:18-alpine
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    command: sh -c "npm install && npm start"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  node_modules: 

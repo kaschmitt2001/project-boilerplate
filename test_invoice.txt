@@ -1,0 +1,28 @@
+BILL OF LADING
+
+Shipper: ABC Shipping Co.
+Address: 123 Export Street, Los Angeles, CA 90001
+
+Consignee: XYZ Import Corp
+Address: 456 Import Avenue, New York, NY 10001
+
+Bill of Lading Number: BOL123456789
+Vessel Name: MAERSK ATLANTA
+Voyage Number: V2024-001
+
+Port of Loading: Los Angeles, CA
+Port of Discharge: New York, NY
+
+Container Numbers: MSCU123456-7, MSCU789012-3
+Seal Numbers: SL001234, SL005678
+
+Cargo Description: Electronic Equipment - Computers and Monitors
+Gross Weight: 15,500 KG
+Net Weight: 14,200 KG
+Number of Packages: 250 CARTONS
+
+Commercial Invoice Number: INV-2024-0123
+Invoice Date: January 15, 2024
+Total Value: $125,000.00
+Currency: USD
+Terms of Sale: FOB Los Angeles 
